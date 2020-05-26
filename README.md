@@ -1,14 +1,21 @@
 
 
 # Conway's Game of Life
+What is the project?
+
+What problem does it solve?
+
+Exceptional difficulties and solutions, if any.
+
+TODO list/wishlist. What do you want to add to it if you have more time?
 
 
+## Resources
 
-## Deploy Your Own
+https://github.com/LambdaSchool/CS-Build-Week-1/tree/master/resources/web
 
-Deploy your own React project, along with Serverless Functions, with Vercel.
+
 
 
 ### Deploying From Your Terminal
 
-You can deploy your new React project, 
