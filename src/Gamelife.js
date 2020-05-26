@@ -59,6 +59,7 @@ class Game extends React.Component {
         this.cols3 = Width3 / Pixel_Size;
 
         this.board = this.EmptyBoard();
+        
     }
 
     state = {
@@ -208,11 +209,11 @@ class Game extends React.Component {
     
     calculateNeighbors(board, x, y) {
         let neighbors = 0;
-        const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
-        for (let i = 0; i < dirs.length; i++) {
-            const dir = dirs[i];
-            let y1 = y + dir[0];
-            let x1 = x + dir[1];
+        const directs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
+        for (let i = 0; i < directs.length; i++) {
+            const direct = directs[i];
+            let y1 = y + direct[0];
+            let x1 = x + direct[1];
 
             if (x1 >= 0 && x1 < this.cols1 && y1 >= 0 && y1 < this.rows1 && board[y1][x1]) {
                 neighbors++;
@@ -305,7 +306,7 @@ class Game extends React.Component {
                         Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
                         {isRunning ?
                             <button className="btn" onClick={this.stopGame}>Stop</button> :
-                            <button className="btn" onClick={this.startGame}>Run</button>
+                            // <button className="btn" onClick={this.startGame}>Run</button>
                         }
                         {/* <button className="btn" onClick={this.handleRandom}>Random</button> */}
                         <button className="btn" onClick={this.handleClear}>Clear</button>
