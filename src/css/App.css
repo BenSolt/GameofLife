@@ -1,0 +1,67 @@
+h1 {
+  font-size: 45px;
+}
+h2 {
+  margin-top: 1.5em;
+}
+p {
+  font-size: 16px;
+}
+
+/* pre {
+  color: #d400ff;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace, serif;
+  font-size: 0.92em;
+} */
+
+.mainContainer{
+  margin: 3%;
+
+}
+.title{
+  display: flex;
+  justify-content: center;
+  border: 2px solid red;
+}
+  .container{
+    border: 2px solid red;
+    display: flex;
+    /* justify-content: space-around; */
+    
+  }
+    .boxLeft{
+      border: 2px solid blue;
+      
+    }
+
+    .imageBox{
+      background: red;
+      width: 256px; 
+      height: 256px;
+    }
+
+    .boxMiddle{
+      border: 2px solid blue;
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+    }
+
+    .boxRight{
+      border: 2px solid blue;
+      padding: 12px;
+    }
+
+    /* BUTTON */
+    .btn{
+      width: 108px;
+      height: 44px;
+      margin: 12px;
+      padding: 5px;
+      border: none;
+    }
+    
+    .btn:hover{
+      background: lightblue;
+    }

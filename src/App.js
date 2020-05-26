@@ -1,6 +1,9 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import './App.css';
+import './css/App.css';
+// import Test from './Test'
+
+// import Animate from './Animate'
 
 function App() {
   const [date, setDate] = useState(null);
@@ -13,44 +16,50 @@ function App() {
     getDate();
   }, []);
   return (
-    <main>
-      <h1>Create React App + Go API</h1>
-      <h2>
-        Deployed with{' '}
-        <a
-          href="https://vercel.com/docs"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Vercel
-        </a>
-        !
-      </h2>
-      <p>
-        <a
-          href="https://github.com/zeit/now/tree/master/examples/create-react-app"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          This project
-        </a>{' '}
-        was bootstrapped with{' '}
-        <a href="https://facebook.github.io/create-react-app/">
-          Create React App
-        </a>{' '}
-        and contains three directories, <code>/public</code> for static assets,{' '}
-        <code>/src</code> for components and content, and <code>/api</code>{' '}
-        which contains a serverless <a href="https://golang.org/">Go</a>{' '}
-        function. See{' '}
-        <a href="/api/date">
-          <code>api/date</code> for the Date API with Go
-        </a>
-        .
-      </p>
-      <br />
-      <h2>The date according to Go is:</h2>
-      <p>{date ? date : 'Loading date...'}</p>
-    </main>
+    <div className='mainContainer'>
+      <div className="title">
+        <h1> Conway's Game of Life</h1>
+      </div>
+      
+      {/* <Test/> */}
+      
+      {/* <Animate/> */}
+      <div className="container">
+     
+      <div className="boxLeft">
+        <h2>Generation: #</h2>
+        <div className="imageBox"></div>
+
+        <div className='buttons'>
+          <button className='btn'>Play</button>
+          <button className='btn'>Pause</button>
+          <button className='btn'>Stop</button>
+        </div>
+
+      </div>
+
+      <div className='boxMiddle'>
+        <button className='btn'>Preset 1</button>
+        <button className='btn'>Preset 2</button>
+        <button className='btn'>Preset 3</button>
+        <button className='btn'>Preset 4</button>
+      </div>
+
+      <div className='boxRight'>
+        <h3>Rules</h3>
+
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+      </div>
+
+     {/* END 3 CONTAINER */}
+      </div> 
+
+      
+    </div>
+    
   );
 }
 
