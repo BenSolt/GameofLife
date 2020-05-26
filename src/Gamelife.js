@@ -6,15 +6,18 @@ const Pixel_Size = 20;
 const Width1 = 800;
 const Height1 = 600;
 
-const Width2 = 400;
-const Height2 = 300;
+const Width2 = 600;
+const Height2 = 450;
+
+const Width3 = 400;
+const Height3 = 300;
 
 class Cell extends React.Component {
 
     render() {
         const { x, y } = this.props;
         return (
-            <div className="Cell" style={{
+            <div className="Pixel" style={{
                 left: `${Pixel_Size * x + 1}px`,
                 top: `${Pixel_Size * y + 1}px`,
                 width: `${Pixel_Size - 1}px`,
@@ -33,6 +36,8 @@ class Game extends React.Component {
         this.cols1 = Width1 / Pixel_Size;
         this.rows2 = Height2 / Pixel_Size;
         this.cols2 = Width2 / Pixel_Size;
+        this.rows3 = Height3 / Pixel_Size;
+        this.cols3 = Width3 / Pixel_Size;
 
         this.board = this.EmptyBoard();
     }
@@ -58,6 +63,13 @@ class Game extends React.Component {
                 board[y][x] = false;
             }
         }
+
+        for (let y = 0; y < this.rows3; y++) {
+            board[y] = [];
+            for (let x = 0; x < this.cols3; x++) {
+                board[y][x] = false;
+            }
+        }
         return board;
     }
 
@@ -71,30 +83,44 @@ class Game extends React.Component {
         };
     }
 
-    makeCells() {
-        let cells = [];
+// BIG
+    makePixels() {
+        let pixels = [];
         for (let y = 0; y < this.rows1; y++) {
             for (let x = 0; x < this.cols1; x++) {
                 if (this.board[y][x]) {
-                    cells.push({ x, y });
+                    pixels.push({ x, y });
                 }
             }
         }
-        return cells;
+        return pixels;
     }
-
-    makeCells2() {
-        let cells = [];
+    
+// MEDIUM
+    makePixels2() {
+        let pixels = [];
         for (let y = 0; y < this.rows2; y++) {
             for (let x = 0; x < this.cols2; x++) {
                 if (this.board[y][x]) {
-                    cells.push({ x, y });
+                    pixels.push({ x, y });
                 }
             }
         }
-        return cells;
+        return pixels;
     }
 
+// SMALL
+    makePixels3() {
+        let pixels = [];
+        for (let y = 0; y < this.rows3; y++) {
+            for (let x = 0; x < this.cols3; x++) {
+                if (this.board[y][x]) {
+                    pixels.push({ x, y });
+                }
+            }
+        }
+        return pixels;
+    }
 
 
 
@@ -111,7 +137,7 @@ class Game extends React.Component {
             this.board[y][x] = !this.board[y][x];
         }
 
-        this.setState({ cells: this.makeCells() });
+        this.setState({ cells: this.makePixels() });
         
     }
 
@@ -149,7 +175,7 @@ class Game extends React.Component {
         }
 
         this.board = newBoard;
-        this.setState({ cells: this.makeCells() });
+        this.setState({ cells: this.makePixels() });
         
 
         this.timeoutHandler = window.setTimeout(() => {
@@ -179,8 +205,9 @@ class Game extends React.Component {
 
     handleClear = () => {
         this.board = this.EmptyBoard();
-        this.setState({ cells: this.makeCells() });
-        this.setState({ cells: this.makeCells2() });
+        this.setState({ cells: this.makePixels() });
+        this.setState({ cells: this.makePixels2() });
+        this.setState({ cells: this.makePixels3() });
     }
 
     handleRandom1 = () => {
@@ -190,7 +217,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makeCells() });
+        this.setState({ cells: this.makePixels() });
         
     }
 
@@ -202,7 +229,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makeCells2() });
+        this.setState({ cells: this.makePixels2() });
         
     }
     // GAME BOARD SMALL
@@ -213,7 +240,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makeCells3() });
+        this.setState({ cells: this.makePixels3() });
         
     }
 
@@ -238,6 +265,11 @@ class Game extends React.Component {
 
                 <div className="navbar">
                     <div className='navbar2'>
+                    {/* <span>
+						{'+ '}
+						<Slider speed={speed} onSpeedChange={this.handleSpeedChange} />
+						{' -'}
+					</span> */}
                         Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
                         {isRunning ?
                             <button className="btn" onClick={this.stopGame}>Stop</button> :
