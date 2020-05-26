@@ -12,7 +12,24 @@ const Height2 = 450;
 const Width3 = 400;
 const Height3 = 300;
 
-class Cell extends React.Component {
+const Slider = ({ speed, onSpeedChange }) => {
+    const handleChange = e => onSpeedChange(e.target.value);
+
+    return (
+        <input
+            type='range'
+            min='50'
+            max='1000'
+            step='50'
+            value={speed}
+            onChange={handleChange}
+        />
+    );
+};
+
+
+
+class Pixel extends React.Component {
 
     render() {
         const { x, y } = this.props;
@@ -26,6 +43,8 @@ class Cell extends React.Component {
         );
     }
 }
+
+
 
 
 class Game extends React.Component {
@@ -43,7 +62,7 @@ class Game extends React.Component {
     }
 
     state = {
-        cells: [],
+        pixels: [],
         isRunning: false,
         interval: 100,
     }
@@ -120,9 +139,12 @@ class Game extends React.Component {
             }
         }
         return pixels;
+        // style={{ width: Width1, height: Height1, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
     }
 
-
+	handleSpeedChange = newSpeed => {
+		this.setState({ interval: newSpeed });
+	}
 
     handleClick = (event) => {
 
@@ -133,13 +155,14 @@ class Game extends React.Component {
         const x = Math.floor(offsetX / Pixel_Size);
         const y = Math.floor(offsetY / Pixel_Size);
 
-        if (x >= 0 && x <= this.cols && y >= 0 && y <= this.rows) {
+        if (x >= 0 && x <= this.cols1 && y >= 0 && y <= this.rows1) {
             this.board[y][x] = !this.board[y][x];
         }
 
-        this.setState({ cells: this.makePixels() });
+        this.setState({ pixels: this.makePixels() });
         
     }
+    
 
     startGame = () => {
         this.setState({ isRunning: true });
@@ -175,7 +198,7 @@ class Game extends React.Component {
         }
 
         this.board = newBoard;
-        this.setState({ cells: this.makePixels() });
+        this.setState({ pixels: this.makePixels() });
         
 
         this.timeoutHandler = window.setTimeout(() => {
@@ -205,9 +228,9 @@ class Game extends React.Component {
 
     handleClear = () => {
         this.board = this.EmptyBoard();
-        this.setState({ cells: this.makePixels() });
-        this.setState({ cells: this.makePixels2() });
-        this.setState({ cells: this.makePixels3() });
+        this.setState({ pixels: this.makePixels() });
+        this.setState({ pixels: this.makePixels2() });
+        this.setState({ pixels: this.makePixels3() });
     }
 
     handleRandom1 = () => {
@@ -217,7 +240,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makePixels() });
+        this.setState({ pixels: this.makePixels() });
         
     }
 
@@ -229,7 +252,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makePixels2() });
+        this.setState({ pixels: this.makePixels2() });
         
     }
     // GAME BOARD SMALL
@@ -240,36 +263,45 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ cells: this.makePixels3() });
+        this.setState({ pixels: this.makePixels3() });
         
     }
+    
+ 
 
+    
 
     render() {
-        const { cells, interval, isRunning } = this.state;
+        const { pixels, interval, isRunning } = this.state;
         return (
             <div>
-                <div className="Gameboard"
-                    style={{ width: Width1, height: Height1, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
-                    onClick={this.handleClick}
-                    ref={(n) => { this.boardRef = n; }}>
+                <div className="container">
+                    <div className="Gameboard1"
+                        style={{ width: Width1, height: Height1, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
+                        
+                        onClick={this.handleClick}
+                        ref={(n) => { this.boardRef = n; }}>
 
-                    {cells.map(cell => (
-                        <Cell x={cell.x} y={cell.y} key={`${cell.x},${cell.y}`}/>
-                    ))}
+                        {pixels.map(p => (
+                            <Pixel x={p.x} y={p.y} key={`${p.x},${p.y}`}/>
+                        ))}
+                    </div>
+                
+                    <div className="btnContainer">
+                        {/* BOARD SIZE */}
+                        <button className="btn" onClick={this.handleRandom1}>Big</button>
+                        <button className="btn" onClick={this.handleRandom2}>Medium</button>
+                        <button className="btn" onClick={this.handleRandom3}>Small</button>
+                    </div>
                 </div>
-                {/* BOARD SIZE */}
-                    <button className="btn" onClick={this.handleRandom1}>Big</button>
-                    <button className="btn" onClick={this.handleRandom2}>Medium</button>
-                    <button className="btn" onClick={this.handleRandom3}>Small</button>
 
-                <div className="navbar">
-                    <div className='navbar2'>
-                    {/* <span>
-						{'+ '}
-						<Slider speed={speed} onSpeedChange={this.handleSpeedChange} />
-						{' -'}
-					</span> */}
+                <div className="navbarHolder">
+                    <div className='navbar'>
+                    <span className="slider">
+						{'- '}
+						<Slider speed={interval} onSpeedChange={this.handleSpeedChange} />
+						{' +'}
+					</span>
                         Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
                         {isRunning ?
                             <button className="btn" onClick={this.stopGame}>Stop</button> :

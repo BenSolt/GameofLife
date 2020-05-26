@@ -1,26 +1,42 @@
-.Gameboard {
+.Gameboard1 {
     position: relative;
-    margin: 0 auto;
+    display: flex;
+    
+    /* margin: 0 auto; */
     background-color: #000;
     background-image:
         linear-gradient(#333 1px, transparent 1px),
         linear-gradient(90deg, #333 1px, transparent 1px);
 }
 
+.container{
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: center;
+    
+  }
+
+.btnContainer{
+    /* border: 2px solid blue; */
+    background: blue;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
 .Pixel {
     background: #ccc;
     position: absolute;
 }
 
-.navbar {
+.navbarHolder {
     margin-top: 20px;
-    border: 2px solid red;
-}
-.navbar2{
-    /* display: flex; */
+    display: flex;
     justify-content: center;
-    border: 2px solid blue;
 }
+
 
 .btn{
     width: 108px;
@@ -34,4 +50,8 @@
 
 .btn:hover{
       background: lightblue;
+    }
+
+.slider{
+    padding-right: 40px;
     }
