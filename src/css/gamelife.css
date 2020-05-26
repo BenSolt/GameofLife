@@ -1,0 +1,37 @@
+.Gameboard {
+    position: relative;
+    margin: 0 auto;
+    background-color: #000;
+    background-image:
+        linear-gradient(#333 1px, transparent 1px),
+        linear-gradient(90deg, #333 1px, transparent 1px);
+}
+
+.Cell {
+    background: #ccc;
+    position: absolute;
+}
+
+.navbar {
+    margin-top: 20px;
+    border: 2px solid red;
+}
+.navbar2{
+    /* display: flex; */
+    justify-content: center;
+    border: 2px solid blue;
+}
+
+.btn{
+    width: 108px;
+    height: 44px;
+    margin: 12px;
+    padding: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+
+.btn:hover{
+      background: lightblue;
+    }
