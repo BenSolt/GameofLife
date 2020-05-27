@@ -412,7 +412,7 @@ class Game extends React.Component {
                         
                         onClick={this.handleClick}
                         ref={(a) => { this.boardRef = a; }}>
-                        {/* CREATE PIXEL BOARD */}
+                        
                         {pixels.map(p => (
                             <Pixel x={p.x} y={p.y} key={`${p.x},${p.y}`}/>
                         ))}
@@ -446,10 +446,10 @@ class Game extends React.Component {
                         <button className="btn" onClick={this.handleRandom2}>Medium</button>
                         <button className="btn" onClick={this.handleRandom1}>Big</button>
 
-                        <button className="btn" onClick={this.gen}>Step</button>
+                        {/* <button className="btn" onClick={this.gen}>Step</button> */}
                     </div>
 
-{/* TEXT RULES and ABOUT */}
+                {/* TEXT RULES and ABOUT */}
                     <div className='boxRight'>
                         <h3>RULES:</h3>
                         <div className='boxRightText'>
@@ -465,7 +465,7 @@ class Game extends React.Component {
                         <p className='bullet'>
                             <a className="link" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life </a>
                            
-                            is a cellular automaton created by the British mathematician John Horton Conway in 1970. (1937 – 11 April 2020) Died of complications 
+                            is a cellular automaton created by the British mathematician John Horton Conway in 1970. (26 December 1937 – 11 April 2020) Died of complications 
                             from COVID-19</p>
                          
                         </div>
@@ -483,11 +483,11 @@ class Game extends React.Component {
 					</span>
                         Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
                         {isRunning ?
-                            <button className="btn" onClick={this.stopGame}>Stop</button> :
-                            <button className="btn" onClick={this.startGame}>Run</button>
+                            <button className="btn2" onClick={this.stopGame}>Stop</button> :
+                            <button className="btn2" onClick={this.startGame}>Run</button>
                         }
                         {/* <button className="btn" onClick={this.handleRandom}>Random</button> */}
-                        <button className="btn" onClick={this.handleClear}>Clear</button>
+                        <button className="btn2" onClick={this.handleClear}>Clear</button>
 
                         
                     </div>

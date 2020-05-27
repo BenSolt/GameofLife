@@ -48,9 +48,27 @@
     cursor: pointer;
   }
 
-.btn:hover{
+  .btn:hover{
+    background: lightblue;
+  }
+
+  .btn2{
+    width: 108px;
+    height: 44px;
+    margin: 12px;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    background: blue;
+  }  
+
+.btn2:hover{
       background: lightblue;
+      color: black;
     }
+
 
 .slider{
     padding-right: 40px;
