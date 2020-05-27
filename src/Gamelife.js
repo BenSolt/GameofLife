@@ -18,9 +18,9 @@ const Slider = ({ speed, onSpeedChange }) => {
     return (
         <input
             type='range'
-            min='50'
+            min='10'
             max='1000'
-            step='50'
+            step='10'
             value={speed}
             onChange={handleChange}
         />
@@ -51,10 +51,13 @@ class Game extends React.Component {
 
     constructor() {
         super();
+        // BIG
         this.rows1 = Height1 / Pixel_Size;
         this.cols1 = Width1 / Pixel_Size;
+        // MEDIUM
         this.rows2 = Height2 / Pixel_Size;
         this.cols2 = Width2 / Pixel_Size;
+        // SMALL
         this.rows3 = Height3 / Pixel_Size;
         this.cols3 = Width3 / Pixel_Size;
 
@@ -66,6 +69,10 @@ class Game extends React.Component {
         pixels: [],
         isRunning: false,
         interval: 100,
+        generation: 0,
+        num1: false,
+        num2: false,
+        num3: false,
     }
 
     EmptyBoard() {
@@ -140,7 +147,7 @@ class Game extends React.Component {
             }
         }
         return pixels;
-        // style={{ width: Width1, height: Height1, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
+        // style={{ width: Width3, height: Height3, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
     }
 
 	handleSpeedChange = newSpeed => {
@@ -163,22 +170,51 @@ class Game extends React.Component {
         this.setState({ pixels: this.makePixels() });
         
     }
-    
+
+    gen = () => {
+        // this.setState(prevState => ({
+        //     // boardStatus: nextStep(prevState),
+		// 	generation: prevState.generation + 1
+        // }));
+
+        this.setState({generation: 1
+        });  
+    }
+  
 
     startGame = () => {
         this.setState({ isRunning: true });
-        this.runIteration();
-    }
-
-    stopGame = () => {
-        this.setState({ isRunning: false });
-        if (this.timeoutHandler) {
-            window.clearTimeout(this.timeoutHandler);
-            this.timeoutHandler = null;
+       
+        if (this.setState({num1:false}) === true){
+            this.runIteration1();
+        }else if (this.setState({num2:false}) === true){
+            this.runIteration2();
+        }else {
+            this.runIteration3();
         }
     }
 
-    runIteration() {
+
+
+
+    stopGame = () => {
+        this.setState({ isRunning: false,
+        num1: false,
+        generation: 0
+        });
+        
+        if (this.timeoutHandler) {
+            window.clearTimeout(this.timeoutHandler);
+            this.timeoutHandler = null;
+            
+        }
+    }
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// BIG
+    runIteration1() {
         let newBoard = this.EmptyBoard();
 
         for (let y = 0; y < this.rows1; y++) {
@@ -203,10 +239,73 @@ class Game extends React.Component {
         
 
         this.timeoutHandler = window.setTimeout(() => {
-            this.runIteration();
+            this.runIteration1();
+        }, this.state.interval);
+    }
+
+// MEDIUM
+    runIteration2() {
+        let newBoard = this.EmptyBoard();
+
+        for (let y = 0; y < this.rows2; y++) {
+            for (let x = 0; x < this.cols2; x++) {
+                let neighbors = this.calculateNeighbors(this.board, x, y);
+                if (this.board[y][x]) {
+                    if (neighbors === 2 || neighbors === 3) {
+                        newBoard[y][x] = true;
+                    } else {
+                        newBoard[y][x] = false;
+                    }
+                } else {
+                    if (!this.board[y][x] && neighbors === 3) {
+                        newBoard[y][x] = true;
+                    }
+                }
+            }
+        }
+
+        this.board = newBoard;
+        this.setState({ pixels: this.makePixels() });
+        
+
+        this.timeoutHandler = window.setTimeout(() => {
+            this.runIteration2();
+        }, this.state.interval);
+    }
+
+// SMALL
+    runIteration3() {
+        let newBoard = this.EmptyBoard();
+
+        for (let y = 0; y < this.rows3; y++) {
+            for (let x = 0; x < this.cols3; x++) {
+                let neighbors = this.calculateNeighbors(this.board, x, y);
+                if (this.board[y][x]) {
+                    if (neighbors === 2 || neighbors === 3) {
+                        newBoard[y][x] = true;
+                    } else {
+                        newBoard[y][x] = false;
+                    }
+                } else {
+                    if (!this.board[y][x] && neighbors === 3) {
+                        newBoard[y][x] = true;
+                    }
+                }
+            }
+        }
+
+        this.board = newBoard;
+        this.setState({ pixels: this.makePixels(),
+            generation: 0
+         });
+        
+
+        this.timeoutHandler = window.setTimeout(() => {
+            this.runIteration3();
         }, this.state.interval);
     }
     
+
     calculateNeighbors(board, x, y) {
         let neighbors = 0;
         const directs = [[-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1], [1, 0], [1, -1], [0, -1]];
@@ -229,11 +328,18 @@ class Game extends React.Component {
 
     handleClear = () => {
         this.board = this.EmptyBoard();
-        this.setState({ pixels: this.makePixels() });
-        this.setState({ pixels: this.makePixels2() });
-        this.setState({ pixels: this.makePixels3() });
+        this.setState({pixels: this.makePixels()})
+        this.setState({ pixels: this.makePixels2()}) 
+        this.setState({ pixels: this.makePixels3()})
+        this.setState({generation: 0})
+           
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////   
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// GAME BOARD BIG
     handleRandom1 = () => {
         for (let y = 0; y < this.rows1; y++) {
             for (let x = 0; x < this.cols1; x++) {
@@ -241,7 +347,14 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ pixels: this.makePixels() });
+        this.setState({ pixels: this.makePixels(),
+            num1: true 
+        });
+       
+        document.getElementById('G1').style.display = "block"
+        document.getElementById('G2').style.display = "none"
+        document.getElementById('G3').style.display = "none"
+        // var a === false;
         
     }
 
@@ -254,8 +367,12 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels2() });
-        
+
+        document.getElementById('G2').style.display = "block"
+        document.getElementById('G1').style.display = "none"
+        document.getElementById('G3').style.display = "none"
     }
+
     // GAME BOARD SMALL
     handleRandom3 = () => {
         for (let y = 0; y < this.rows3; y++) {
@@ -265,23 +382,47 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels3() });
-        
-    }
-    
- 
 
-    
+        document.getElementById('G3').style.display = "block"
+        document.getElementById('G2').style.display = "none"
+        document.getElementById('G1').style.display = "none"
+    }
+
+
 
     render() {
         const { pixels, interval, isRunning } = this.state;
         return (
             <div>
                 <div className="container">
-                    <div className="Gameboard1"
+
+                    <div id='G1' className="Gameboard1"
                         style={{ width: Width1, height: Height1, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
                         
                         onClick={this.handleClick}
-                        ref={(n) => { this.boardRef = n; }}>
+                        ref={(a) => { this.boardRef = a; }}>
+                        {/* CREATE PIXEL BOARD */}
+                        {pixels.map(p => (
+                            <Pixel x={p.x} y={p.y} key={`${p.x},${p.y}`}/>
+                        ))}
+                    </div>
+
+                    <div id='G2' className="Gameboard1"
+                        style={{ width: Width2, height: Height2, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
+                        
+                        onClick={this.handleClick}
+                        ref={(a) => { this.boardRef = a; }}>
+
+                        {pixels.map(p => (
+                            <Pixel x={p.x} y={p.y} key={`${p.x},${p.y}`}/>
+                        ))}
+                    </div>
+
+                    <div id='G3' className="Gameboard1"
+                        style={{ width: Width3, height: Height3, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
+                        
+                        onClick={this.handleClick}
+                        ref={(a) => { this.boardRef = a; }}>
 
                         {pixels.map(p => (
                             <Pixel x={p.x} y={p.y} key={`${p.x},${p.y}`}/>
@@ -290,14 +431,36 @@ class Game extends React.Component {
                 
                     <div className="btnContainer">
                         {/* BOARD SIZE */}
-                        <button className="btn" onClick={this.handleRandom1}>Big</button>
-                        <button className="btn" onClick={this.handleRandom2}>Medium</button>
                         <button className="btn" onClick={this.handleRandom3}>Small</button>
+                        <button className="btn" onClick={this.handleRandom2}>Medium</button>
+                        <button className="btn" onClick={this.handleRandom1}>Big</button>
+                    </div>
+
+{/* TEXT RULES and ABOUT */}
+                    <div className='boxRight'>
+                        <h3>RULES:</h3>
+                        <div className='boxRightText'>
+                            <li className='bullet'>Every cell interacts with its surrounding eight neighbors.
+                            Horizontally, Vertically, Diagonally and Adjacent.</li>
+                            <li className='bullet'>Any live cell with two or three live neighbors survives.</li>
+                            <li className='bullet'>Any dead cell with three live neighbors becomes a live cell.</li>
+                            <li className='bullet'>All other live cells die in the next generation. All dead cells stay dead.</li>
+                        </div>
+
+                        <h3>ABOUT:</h3>
+                        <div className='boxRightText'>
+                        <p className='bullet'>
+                            <a className="link" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life </a>
+                           
+                            is a cellular automaton created by the British mathematician John Horton Conway in 1970.</p>
+                         
+                        </div>
                     </div>
                 </div>
 
                 <div className="navbarHolder">
-                    <div className='navbar'>
+                    <div>
+                        <p>Generation: shownumber{this.generation}</p>
                     <span className="slider">
 						{'- '}
 						<Slider speed={interval} onSpeedChange={this.handleSpeedChange} />
@@ -306,7 +469,7 @@ class Game extends React.Component {
                         Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
                         {isRunning ?
                             <button className="btn" onClick={this.stopGame}>Stop</button> :
-                            // <button className="btn" onClick={this.startGame}>Run</button>
+                            <button className="btn" onClick={this.startGame}>Run</button>
                         }
                         {/* <button className="btn" onClick={this.handleRandom}>Random</button> */}
                         <button className="btn" onClick={this.handleClear}>Clear</button>
