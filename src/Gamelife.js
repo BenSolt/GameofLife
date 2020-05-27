@@ -171,26 +171,22 @@ class Game extends React.Component {
         
     }
 
-    gen = () => {
-        // this.setState(prevState => ({
-        //     // boardStatus: nextStep(prevState),
-		// 	generation: prevState.generation + 1
-        // }));
-
-        this.setState({generation: 1
-        });  
+    gen = () => { 
+        this.setState(prevState => ({
+            generation: prevState.generation + 1  
+        }));         
     }
   
 
     startGame = () => {
         this.setState({ isRunning: true });
-       
         if (this.setState({num1:false}) === true){
             this.runIteration1();
         }else if (this.setState({num2:false}) === true){
             this.runIteration2();
         }else {
             this.runIteration3();
+       
         }
     }
 
@@ -209,6 +205,11 @@ class Game extends React.Component {
             
         }
     }
+
+    
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -236,7 +237,9 @@ class Game extends React.Component {
 
         this.board = newBoard;
         this.setState({ pixels: this.makePixels() });
-        
+        this.setState(prevState => ({
+            generation: prevState.generation + 1  
+        }));  
 
         this.timeoutHandler = window.setTimeout(() => {
             this.runIteration1();
@@ -266,7 +269,9 @@ class Game extends React.Component {
 
         this.board = newBoard;
         this.setState({ pixels: this.makePixels() });
-        
+        this.setState(prevState => ({
+            generation: prevState.generation + 1  
+        }));  
 
         this.timeoutHandler = window.setTimeout(() => {
             this.runIteration2();
@@ -296,9 +301,10 @@ class Game extends React.Component {
 
         this.board = newBoard;
         this.setState({ pixels: this.makePixels(),
-            generation: 0
          });
-        
+         this.setState(prevState => ({
+            generation: prevState.generation + 1  
+        }));  
 
         this.timeoutHandler = window.setTimeout(() => {
             this.runIteration3();
@@ -318,10 +324,13 @@ class Game extends React.Component {
                 neighbors++;
             }
         }
-
         return neighbors;
     }
 
+
+
+
+    
     handleIntervalChange = (event) => {
         this.setState({ interval: event.target.value });
     }
@@ -390,6 +399,8 @@ class Game extends React.Component {
 
 
 
+
+
     render() {
         const { pixels, interval, isRunning } = this.state;
         return (
@@ -434,6 +445,8 @@ class Game extends React.Component {
                         <button className="btn" onClick={this.handleRandom3}>Small</button>
                         <button className="btn" onClick={this.handleRandom2}>Medium</button>
                         <button className="btn" onClick={this.handleRandom1}>Big</button>
+
+                        <button className="btn" onClick={this.gen}>Step</button>
                     </div>
 
 {/* TEXT RULES and ABOUT */}
@@ -452,7 +465,8 @@ class Game extends React.Component {
                         <p className='bullet'>
                             <a className="link" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life </a>
                            
-                            is a cellular automaton created by the British mathematician John Horton Conway in 1970.</p>
+                            is a cellular automaton created by the British mathematician John Horton Conway in 1970. (1937 – 11 April 2020) Died of complications 
+                            from COVID-19</p>
                          
                         </div>
                     </div>
@@ -460,7 +474,8 @@ class Game extends React.Component {
 
                 <div className="navbarHolder">
                     <div>
-                        <p>Generation: shownumber{this.generation}</p>
+                        <p>Generation: {this.state.generation}</p>
+                        
                     <span className="slider">
 						{'- '}
 						<Slider speed={interval} onSpeedChange={this.handleSpeedChange} />
