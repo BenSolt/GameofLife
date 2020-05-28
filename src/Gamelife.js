@@ -3,11 +3,12 @@ import './css/gamelife.css';
 
 
 const Pixel_Size = 20;
+
 const Width1 = 800;
 const Height1 = 600;
 
 const Width2 = 600;
-const Height2 = 450;
+const Height2 = 460;
 
 const Width3 = 400;
 const Height3 = 300;
@@ -31,15 +32,26 @@ const Slider = ({ speed, onSpeedChange }) => {
 
 class Pixel extends React.Component {
 
+    setRandomColor() {
+        var x = Math.floor(Math.random() * 256);
+        var y = Math.floor(Math.random() * 256);
+        var z = Math.floor(Math.random() * 256);
+        var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+
+        document.getElementById('a').style.background = bgColor;
+      }
+   
     render() {
         const { x, y } = this.props;
         return (
-            <div className="Pixel" style={{
+            <div id="a" className="Pixel" style={{
                 left: `${Pixel_Size * x + 1}px`,
                 top: `${Pixel_Size * y + 1}px`,
                 width: `${Pixel_Size - 1}px`,
                 height: `${Pixel_Size - 1}px`,
             }} />
+            
+           
         );
     }
 }
@@ -201,8 +213,7 @@ class Game extends React.Component {
         }
     }
 
-    
-
+ 
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -351,9 +362,7 @@ class Game extends React.Component {
             }
         }
 
-        this.setState({ pixels: this.makePixels(),
-          
-        });
+        this.setState({ pixels: this.makePixels(),});
        
         document.getElementById('G1').style.display = "block"
         document.getElementById('G2').style.display = "none"
@@ -371,7 +380,6 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels2() });
-        this.setState({num2: true})
 
         document.getElementById('G2').style.display = "block"
         document.getElementById('G1').style.display = "none"
@@ -387,8 +395,6 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels3() });
-        // alert("button was clicked");
-        // this.setState({num3: true})
         
         document.getElementById('G3').style.display = "block"
         document.getElementById('G2').style.display = "none"
@@ -396,8 +402,33 @@ class Game extends React.Component {
     }
 
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+   
+    // getRandomColor() {
+    //     var letters = '0123456789ABCDEF';
+    //     var color = '#';
+    //     for (var i = 0; i < 6; i++) {
+    //     color += letters[Math.floor(Math.random() * 16)];
+    //     }
+    //     return color;
+    // }
 
 
+    setRandomColor() {
+        var x = Math.floor(Math.random() * 256);
+        var y = Math.floor(Math.random() * 256);
+        var z = Math.floor(Math.random() * 256);
+        var bgColor = "rgb(" + x + "," + y + "," + z + ")";
+
+        document.getElementById('a').style.background = bgColor;
+      }
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
     render() {
         const { pixels, interval, isRunning } = this.state;
@@ -444,7 +475,10 @@ class Game extends React.Component {
                         <button className="btn" id="med" onClick={this.handleRandom2}>Medium</button>
                         <button className="btn" id="big" onClick={this.handleRandom1}>Big</button>
 
-                        {/* <button className="btn" onClick={this.gen}>Step</button> */}
+                        {/* <button className="btn" onClick={this.size}>Cell Size</button> */}
+                        <button className="btn" onClick={this.setRandomColor}>color</button>
+
+                        
                     </div>
 
                 {/* TEXT RULES and ABOUT */}
