@@ -43,6 +43,7 @@
     height: 44px;
     margin: 12px;
     padding: 5px;
+    border-radius: 5px;
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -57,6 +58,7 @@
     height: 44px;
     margin: 12px;
     padding: 5px;
+    border-radius: 5px;
     color: white;
     font-weight: bold;
     border: none;

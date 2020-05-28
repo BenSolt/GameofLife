@@ -70,9 +70,6 @@ class Game extends React.Component {
         isRunning: false,
         interval: 100,
         generation: 0,
-        num1: false,
-        num2: false,
-        num3: false,
     }
 
     EmptyBoard() {
@@ -147,7 +144,7 @@ class Game extends React.Component {
             }
         }
         return pixels;
-        // style={{ width: Width3, height: Height3, backgroundSize: `${Pixel_Size}px ${Pixel_Size}px`}}
+       
     }
 
 	handleSpeedChange = newSpeed => {
@@ -180,14 +177,13 @@ class Game extends React.Component {
 
     startGame = () => {
         this.setState({ isRunning: true });
-        if (this.setState({num1:false}) === true){
+        if(document.getElementById('G3').style.display === "block"){
+                this.runIteration3();  
+        }else if (document.getElementById('G2').style.display === "block"){
+             this.runIteration2();
+        }else{
             this.runIteration1();
-        }else if (this.setState({num2:false}) === true){
-            this.runIteration2();
-        }else {
-            this.runIteration3();
-       
-        }
+        }   
     }
 
 
@@ -195,7 +191,6 @@ class Game extends React.Component {
 
     stopGame = () => {
         this.setState({ isRunning: false,
-        num1: false,
         generation: 0
         });
         
@@ -357,13 +352,13 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels(),
-            num1: true 
+          
         });
        
         document.getElementById('G1').style.display = "block"
         document.getElementById('G2').style.display = "none"
         document.getElementById('G3').style.display = "none"
-        // var a === false;
+        
         
     }
 
@@ -376,6 +371,7 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels2() });
+        this.setState({num2: true})
 
         document.getElementById('G2').style.display = "block"
         document.getElementById('G1').style.display = "none"
@@ -391,7 +387,9 @@ class Game extends React.Component {
         }
 
         this.setState({ pixels: this.makePixels3() });
-
+        // alert("button was clicked");
+        // this.setState({num3: true})
+        
         document.getElementById('G3').style.display = "block"
         document.getElementById('G2').style.display = "none"
         document.getElementById('G1').style.display = "none"
@@ -442,9 +440,9 @@ class Game extends React.Component {
                 
                     <div className="btnContainer">
                         {/* BOARD SIZE */}
-                        <button className="btn" onClick={this.handleRandom3}>Small</button>
-                        <button className="btn" onClick={this.handleRandom2}>Medium</button>
-                        <button className="btn" onClick={this.handleRandom1}>Big</button>
+                        <button className="btn" id="small" onClick={this.handleRandom3}>Small</button>
+                        <button className="btn" id="med" onClick={this.handleRandom2}>Medium</button>
+                        <button className="btn" id="big" onClick={this.handleRandom1}>Big</button>
 
                         {/* <button className="btn" onClick={this.gen}>Step</button> */}
                     </div>
@@ -481,7 +479,7 @@ class Game extends React.Component {
 						<Slider speed={interval} onSpeedChange={this.handleSpeedChange} />
 						{' +'}
 					</span>
-                        Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec
+                        {/* Update every <input value={this.state.interval} onChange={this.handleIntervalChange} /> msec */}
                         {isRunning ?
                             <button className="btn2" onClick={this.stopGame}>Stop</button> :
                             <button className="btn2" onClick={this.startGame}>Run</button>
